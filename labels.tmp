@@ -1,0 +1,24 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.12</VERSION>
+ <DEVICE>ATmega8535</DEVICE>
+ <WORKING_DIR>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:\avrstudio\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:\avrstudio\AvrAssembler2\Appnotes\m8535def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <forever><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>4</LINE></forever>
+ </LABELS>
+</ASSEMBLER_INFO>
