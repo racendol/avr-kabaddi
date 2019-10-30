@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.12  C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm Wed Oct 30 22:09:39 2019
+AVRASM ver. 2.1.12  C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm Thu Oct 31 01:14:02 2019
 
 
 EQU  SIGNATURE_000 0000001e
@@ -591,4 +591,12 @@ EQU  INT2addr     00000012
 EQU  OC0addr      00000013
 EQU  SPMRaddr     00000014
 EQU  INT_VECTORS_SIZE 00000015
-CSEG forever      00000000
+DEF  temp         r16
+DEF  EW           r23
+DEF  PB           r24
+CSEG INIT_STACK   00000000
+CSEG INIT_LCD_MAIN 00000004
+CSEG INIT_LCD     00000009
+CSEG test_output  0000001e
+CSEG CLEAR_LCD    00000018
+CSEG forever      0000005a

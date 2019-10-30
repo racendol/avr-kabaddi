@@ -19,6 +19,11 @@
   <FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.map</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <forever><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>4</LINE></forever>
+  <INIT_STACK><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>8</LINE></INIT_STACK>
+  <INIT_LCD_MAIN><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>14</LINE></INIT_LCD_MAIN>
+  <INIT_LCD><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>23</LINE></INIT_LCD>
+  <test_output><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>53</LINE></test_output>
+  <CLEAR_LCD><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>44</LINE></CLEAR_LCD>
+  <forever><FILE>C:\Users\Rocky\Documents\pok sandbox\avr-kabaddi\avr-kabaddi.asm</FILE><LINE>129</LINE></forever>
  </LABELS>
 </ASSEMBLER_INFO>
