@@ -3,10 +3,10 @@
    <General>
       <Build>2005</Build>
       <Position>
-         <top>88</top>
-         <bottom>621</bottom>
-         <left>456</left>
-         <right>1075</right>
+         <top>156</top>
+         <bottom>689</bottom>
+         <left>1003</left>
+         <right>1622</right>
       </Position>
       <StayOnTop>1</StayOnTop>
       <Target>ATmega8535</Target>
@@ -32,16 +32,16 @@
             </DataPort>
             <EnablePin>
                <Port>PORTA</Port>
-               <Bit>1</Bit>
+               <Bit>0</Bit>
             </EnablePin>
             <RW_Pin>
                <WriteOnly>0</WriteOnly>
                <Port>PORTA</Port>
-               <Bit>0</Bit>
+               <Bit>2</Bit>
             </RW_Pin>
             <RS_Pin>
                <Port>PORTA</Port>
-               <Bit>2</Bit>
+               <Bit>1</Bit>
             </RS_Pin>
          </PortMapping>
       </LCD>
