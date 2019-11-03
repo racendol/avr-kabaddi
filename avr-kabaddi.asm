@@ -87,5 +87,11 @@ test_output:
 	sbi PORTA,0 ; SETB EN
 	cbi PORTA,0 ; CLR EN
 
+rcall CLEAR_LCD
+
+;TODO: complete this!
+.include "start-game.asm"
+
+
 forever:
 	rjmp forever
