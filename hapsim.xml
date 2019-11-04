@@ -3,10 +3,10 @@
    <General>
       <Build>2005</Build>
       <Position>
-         <top>156</top>
-         <bottom>689</bottom>
-         <left>1003</left>
-         <right>1622</right>
+         <top>109</top>
+         <bottom>642</bottom>
+         <left>642</left>
+         <right>1261</right>
       </Position>
       <StayOnTop>1</StayOnTop>
       <Target>ATmega8535</Target>
@@ -86,5 +86,153 @@
          <TrinaryGroupEnable index="0">0</TrinaryGroupEnable>
          <TrinaryGroupEnable index="1">0</TrinaryGroupEnable>
       </Buttons>
+      <Buttons>
+         <Name>Buttons2</Name>
+         <Position>
+            <top>213</top>
+            <left>183</left>
+         </Position>
+         <Config index="0">
+            <Name>Ext Interr</Name>
+            <PortPin>
+               <Port>PORTA</Port>
+               <Bit>3</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <Config index="1">
+            <Name>Button0</Name>
+            <PortPin>
+               <Port>PORTA</Port>
+               <Bit>4</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <Config index="2">
+            <Name>Button1</Name>
+            <PortPin>
+               <Port>PORTA</Port>
+               <Bit>5</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <Config index="3">
+            <Name>Button2</Name>
+            <PortPin>
+               <Port>PORTA</Port>
+               <Bit>6</Bit>
+            </PortPin>
+            <Invert>0</Invert>
+         </Config>
+         <TrinaryGroupEnable index="0">0</TrinaryGroupEnable>
+         <TrinaryGroupEnable index="1">0</TrinaryGroupEnable>
+      </Buttons>
+      <Keypad>
+         <Name>Keypad1</Name>
+         <Position>
+            <top>22</top>
+            <left>260</left>
+         </Position>
+         <PortMapping>
+            <Strobe index="0">
+               <Port>PORTD</Port>
+               <Bit>4</Bit>
+            </Strobe>
+            <Strobe index="1">
+               <Port>PORTD</Port>
+               <Bit>5</Bit>
+            </Strobe>
+            <Strobe index="2">
+               <Port>PORTD</Port>
+               <Bit>6</Bit>
+            </Strobe>
+            <Strobe index="3">
+               <Port>PORTD</Port>
+               <Bit>7</Bit>
+            </Strobe>
+            <Input index="0">
+               <Port>PORTD</Port>
+               <Bit>0</Bit>
+            </Input>
+            <Input index="1">
+               <Port>PORTD</Port>
+               <Bit>1</Bit>
+            </Input>
+            <Input index="2">
+               <Port>PORTD</Port>
+               <Bit>2</Bit>
+            </Input>
+            <Input index="3">
+               <Port>PORTD</Port>
+               <Bit>3</Bit>
+            </Input>
+         </PortMapping>
+         <Buttons>
+            <Button index="0">
+               <Caption>1</Caption>
+               <PCKey>1346117664</PCKey>
+            </Button>
+            <Button index="1">
+               <Caption>4</Caption>
+               <PCKey>1047424873</PCKey>
+            </Button>
+            <Button index="2">
+               <Caption>7</Caption>
+               <PCKey>538976288</PCKey>
+            </Button>
+            <Button index="3">
+               <Caption>Clear</Caption>
+               <PCKey>1869888544</PCKey>
+            </Button>
+            <Button index="4">
+               <Caption>2</Caption>
+               <PCKey>1949252660</PCKey>
+            </Button>
+            <Button index="5">
+               <Caption>5</Caption>
+               <PCKey>538976288</PCKey>
+            </Button>
+            <Button index="6">
+               <Caption>8</Caption>
+               <PCKey>538976288</PCKey>
+            </Button>
+            <Button index="7">
+               <Caption>0</Caption>
+               <PCKey>892550772</PCKey>
+            </Button>
+            <Button index="8">
+               <Caption>3</Caption>
+               <PCKey>171865190</PCKey>
+            </Button>
+            <Button index="9">
+               <Caption>6</Caption>
+               <PCKey>538976288</PCKey>
+            </Button>
+            <Button index="10">
+               <Caption>9</Caption>
+               <PCKey>1953067887</PCKey>
+            </Button>
+            <Button index="11">
+               <Caption>Enter</Caption>
+               <PCKey>538976266</PCKey>
+            </Button>
+            <Button index="12">
+               <Caption>Up</Caption>
+               <PCKey>1128013856</PCKey>
+            </Button>
+            <Button index="13">
+               <Caption>Down</Caption>
+               <PCKey>1852383335</PCKey>
+            </Button>
+            <Button index="14">
+               <Caption>Right</Caption>
+               <PCKey>1042427938</PCKey>
+            </Button>
+            <Button index="15">
+               <Caption>Left</Caption>
+               <PCKey>538976288</PCKey>
+            </Button>
+         </Buttons>
+      </Keypad>
    </Views>
 </HAPSIM>

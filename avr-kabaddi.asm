@@ -10,19 +10,10 @@
 .def health1 = r19 ;menyimpan sisa nyawa player pertama
 .def health2 = r20 ;menyimpan sisa nyawa plaer ke dua
 
-.def posA = r1 ;posisi player dari player defending (A)
-.def posB = r2 ;posisi player dari player defending (B)
-.def posC = r3 ;posisi player dari player defending (C)
-
-.def trapA = r4 ;posisi trap dari player defending (A)
-.def trapB = r5 ;posisi trap dari player defending (B)
-.def trapC = r6 ;posisi trap dari player defending (C)
-
-
-.equ LINE1 = 0x80 ;start dari line pertama
-.equ LINE2 = 0XC0 ;start dari line ke dua
-.equ LINE3 = 0x94 ;start dari line ke tiga
-.equ LINE4 = 0xD4 ;start dari line ke empat
+.equ LINE1 = 0x89 ;kotak paling kiri dari field line pertama
+.equ LINE2 = 0XC9 ;kotak paling kiri dari field line ke dua
+.equ LINE3 = 0x9D ;kotak paling kiri dari field line ke tiga
+.equ LINE4 = 0xDD ;kotak paling kiri dari field line ke empat
 
 
 INIT_STACK:
