@@ -10,6 +10,8 @@
 .def health1 = r19 ;menyimpan sisa nyawa player pertama
 .def health2 = r20 ;menyimpan sisa nyawa plaer ke dua
 
+.def temp2 = r21 ;temp reg 2
+
 .equ LINE1 = 0x89 ;kotak paling kiri dari field line pertama
 .equ LINE2 = 0XC9 ;kotak paling kiri dari field line ke dua
 .equ LINE3 = 0x9D ;kotak paling kiri dari field line ke tiga
@@ -101,8 +103,20 @@ test_output:
 rcall CLEAR_LCD
 
 ;TODO: complete this!
-.include "start-game.asm"
+.include "setup-game.asm"
+
 
 
 forever:
 	rjmp forever
+
+
+
+init_field_text_table:
+	.db "Set Up", "trap", "Rem:", "player"
+
+KeyTable: ;dari kiri
+	.db 0x03, 0x07, 0x0B, 0x0F ; kolom ke empat
+	.DB 0x02, 0x06, 0x0A, 0x0E ; kolom ke tiga
+	.DB 0x01, 0x05, 0x09, 0x0D ; kolom ke dua
+	.DB 0x00, 0x04, 0x08, 0x0C ; kolom pertama
