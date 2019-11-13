@@ -1,22 +1,38 @@
 .include "m8535def.inc"
 
-.def temp = r16 ; temporary register
 .def EW = r23 ; for PORTA
 .def PB = r24 ; for PORTB
 
-.def line = r17 ;register untuk menyimpan line ke berapa
-.def col = r18 ;register untuk menyimpan kolom ke berapa
+.def line = r20 ;register untuk menyimpan line ke berapa
+.def col = r21 ;register untuk menyimpan kolom ke berapa
 
-.def health1 = r19 ;menyimpan sisa nyawa player pertama
-.def health2 = r20 ;menyimpan sisa nyawa plaer ke dua
+.def health1 = r10 ;menyimpan sisa nyawa player pertama
+.def health2 = r11 ;menyimpan sisa nyawa plaer ke dua
+.def current_player = r12 ;menyimpan player mana yang sedang jalan
+.def penalty = r13 ;reg yg menyimpan apakah player kena penalty atau tidak
 
-.def temp2 = r21 ;temp reg 2
+.def temp = r16 ; temporary register
+.def temp2 = r17 ;temp reg 2
+.def temp3 = r18 ;temp reg 3
+.def temp4 = r19
 
-.equ LINE1 = 0x89 ;kotak paling kiri dari field line pertama
-.equ LINE2 = 0XC9 ;kotak paling kiri dari field line ke dua
-.equ LINE3 = 0x9D ;kotak paling kiri dari field line ke tiga
-.equ LINE4 = 0xDD ;kotak paling kiri dari field line ke empat
+.equ LINE1 = 0x88 ;kotak paling kiri dari field line pertama
+.equ LINE2 = 0XC8 ;kotak paling kiri dari field line ke dua
+.equ LINE3 = 0x9C ;kotak paling kiri dari field line ke tiga
+.equ LINE4 = 0xDC ;kotak paling kiri dari field line ke empat
 
+.equ FIELD_DATA = 0x0060 ;SRAM dari 0x0060 - 0x006F berisi data di field
+
+init_game:
+	ldi temp, 3
+
+	mov health1, temp
+	mov health2, temp
+	clr line
+	clr col
+
+	mov current_player, line ;set curr player jadi 0 (player 1)
+	mov penalty, line ;set penalty jadi 0 (jadi belum ada penalty)
 
 INIT_STACK:
 	ldi temp, low(RAMEND)
