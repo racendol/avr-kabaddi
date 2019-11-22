@@ -1,4 +1,5 @@
 init_field:
+	rcall INIT_LCD
 	rcall fill_border_field
 
 	ldi ZL, low(2*init_field_text_table)

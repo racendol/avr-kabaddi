@@ -10,6 +10,7 @@
 .def health2 = r11 ;menyimpan sisa nyawa plaer ke dua
 .def current_player = r12 ;menyimpan player mana yang sedang jalan
 .def penalty = r13 ;reg yg menyimpan apakah player kena penalty atau tidak
+.def point = r14 ; stores point accumulated in a round
 
 .def temp = r16 ; temporary register
 .def temp2 = r17 ;temp reg 2
@@ -38,6 +39,24 @@ INIT_STACK:
 	ldi temp, low(RAMEND)
 	ldi temp, high(RAMEND)
 	out SPH, temp
+
+CLEAR_SRAM:
+	ldi XH, high(FIELD_DATA)
+	ldi XL, low(FIELD_DATA)
+
+	ldi temp, 16
+	ldi temp2, 0xFF
+
+	SRAM_clear_loop:
+		st X, temp2
+		inc XL
+		dec temp
+
+		tst temp
+		brne SRAM_clear_loop
+		
+	ldi temp, 0
+	ldi temp2, 0
 
 ;LCD init template borrowed from Lab 5
 .include "init-lcd.asm"
@@ -120,7 +139,7 @@ rcall CLEAR_LCD
 
 ;TODO: complete this!
 .include "setup-game.asm"
-
+.include "round-game.asm"
 
 
 forever:

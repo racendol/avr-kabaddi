@@ -3,10 +3,10 @@
    <General>
       <Build>2005</Build>
       <Position>
-         <top>77</top>
-         <bottom>713</bottom>
-         <left>304</left>
-         <right>923</right>
+         <top>156</top>
+         <bottom>792</bottom>
+         <left>1082</left>
+         <right>1701</right>
       </Position>
       <StayOnTop>1</StayOnTop>
       <Target>ATmega8535</Target>
@@ -52,7 +52,7 @@
             <left>35</left>
          </Position>
          <Config index="0">
-            <Name>Button0</Name>
+            <Name>Forward</Name>
             <PortPin>
                <Port>PORTA</Port>
                <Bit>4</Bit>
@@ -60,7 +60,7 @@
             <Invert>0</Invert>
          </Config>
          <Config index="1">
-            <Name>Button1</Name>
+            <Name>Backward</Name>
             <PortPin>
                <Port>PORTA</Port>
                <Bit>5</Bit>
@@ -68,7 +68,7 @@
             <Invert>0</Invert>
          </Config>
          <Config index="2">
-            <Name>Button2</Name>
+            <Name>Left</Name>
             <PortPin>
                <Port>PORTA</Port>
                <Bit>6</Bit>
@@ -76,7 +76,7 @@
             <Invert>0</Invert>
          </Config>
          <Config index="3">
-            <Name>Button3</Name>
+            <Name>Right</Name>
             <PortPin>
                <Port>PORTA</Port>
                <Bit>7</Bit>
