@@ -484,3 +484,9 @@ change_text_to_player:
 	
 
 end_keypad_input:
+	;clear r5-r9 register
+	clr r5
+	clr r6
+	clr r7
+	clr r8
+	clr r9
