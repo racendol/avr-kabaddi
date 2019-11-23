@@ -146,7 +146,6 @@ forever:
 	rjmp forever
 
 
-
 init_field_text_table:
 	.db "Set Up", "trap", "Rem:", "player"
 

@@ -29,29 +29,34 @@ init_field:
 	rjmp init_keypad
 
 fill_border_field:
-	cpi line, 0
-	breq line1_fill
+	fill_prep:
+		clr line
+		clr temp2
 
-	cpi line, 1
-	breq line2_fill
+	border_loop:
+		cpi line, 0
+		breq line1_fill
 
-	cpi line, 2
-	breq line3_fill
+		cpi line, 1
+		breq line2_fill
 
-	ldi temp, 0xDB
-	rjmp fill
+		cpi line, 2
+		breq line3_fill
 
-	line1_fill:
-	ldi temp, 0x87
-	rjmp fill
+		ldi temp, 0xDB
+		rjmp fill
 
-	line2_fill:
-	ldi temp, 0xC7
-	rjmp fill
+		line1_fill:
+		ldi temp, 0x87
+		rjmp fill
 
-	line3_fill:
-	ldi temp, 0x9B
-	rjmp fill
+		line2_fill:
+		ldi temp, 0xC7
+		rjmp fill
+
+		line3_fill:
+		ldi temp, 0x9B
+		rjmp fill
 
 	fill:
 	add temp, temp2
@@ -70,7 +75,7 @@ fill_border_field:
 	cpi line, 3
 	breq change
 	subi line, -1
-	rjmp fill_border_field
+	rjmp border_loop
 
 	change:
 	cpi temp2, 5
@@ -80,7 +85,7 @@ fill_border_field:
 	pindah_line:
 	ldi temp2, 5
 	ldi line, 0
-	rjmp fill_border_field
+	rjmp border_loop
 
 
 setup_text:
@@ -145,10 +150,10 @@ init_keypad:
 	ldi temp2, 3
 	ldi temp, 0
 
-	mov temp3, health1 ;pindah health player 1 ke temp3
+	mov temp3, health2 ;pindah health player 1 ke temp3
 
 	cpse current_player, temp ;kalau current player adalah 0 (player 1), maka skip perintah dibawah
-	mov temp3, health2 ;pindah health player 2 ke temp3
+	mov temp3, health1 ;pindah health player 2 ke temp3
 
 ;
 ; Check any key pressed
@@ -484,3 +489,9 @@ change_text_to_player:
 	
 
 end_keypad_input:
+	;clear r5-r9 register
+	clr r5
+	clr r6
+	clr r7
+	clr r8
+	clr r9
