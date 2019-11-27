@@ -29,34 +29,33 @@ init_field:
 	rjmp init_keypad
 
 fill_border_field:
-	fill_prep:
-		clr line
-		clr temp2
+	ldi line, 0
+	ldi temp2, 0
 
-	border_loop:
-		cpi line, 0
-		breq line1_fill
+	main_loop_fill:
+	cpi line, 0
+	breq line1_fill
 
-		cpi line, 1
-		breq line2_fill
+	cpi line, 1
+	breq line2_fill
 
-		cpi line, 2
-		breq line3_fill
+	cpi line, 2
+	breq line3_fill
 
-		ldi temp, 0xDB
-		rjmp fill
+	ldi temp, 0xDB
+	rjmp fill
 
-		line1_fill:
-		ldi temp, 0x87
-		rjmp fill
+	line1_fill:
+	ldi temp, 0x87
+	rjmp fill
 
-		line2_fill:
-		ldi temp, 0xC7
-		rjmp fill
+	line2_fill:
+	ldi temp, 0xC7
+	rjmp fill
 
-		line3_fill:
-		ldi temp, 0x9B
-		rjmp fill
+	line3_fill:
+	ldi temp, 0x9B
+	rjmp fill
 
 	fill:
 	add temp, temp2
@@ -75,7 +74,7 @@ fill_border_field:
 	cpi line, 3
 	breq change
 	subi line, -1
-	rjmp border_loop
+	rjmp main_loop_fill
 
 	change:
 	cpi temp2, 5
@@ -85,7 +84,7 @@ fill_border_field:
 	pindah_line:
 	ldi temp2, 5
 	ldi line, 0
-	rjmp border_loop
+	rjmp main_loop_fill
 
 
 setup_text:
@@ -139,29 +138,29 @@ setup_num_text:
 
 init_keypad:
 	ldi temp, 0b11110000 ; data direction register column lines output
-	out DDRD, temp    ; set direction register
+	out DDRC, temp    ; set direction register
 	ldi temp, 0b00001111 ; Pull-Up-Resistors to lower four port pins
-	out PORTD, temp    ; to output port
+	out PORTC, temp    ; to output port
 
 	;init untuk mengecek input keypad
 	ldi col, 4 
 	ldi line, 1
 
 	ldi temp2, 3
-	ldi temp, 0
+	ldi temp, 1
 
-	mov temp3, health2 ;pindah health player 1 ke temp3
+	mov temp3, health1 ;pindah health player 1 ke temp3
 
-	cpse current_player, temp ;kalau current player adalah 0 (player 1), maka skip perintah dibawah
-	mov temp3, health1 ;pindah health player 2 ke temp3
+	cpse current_player, temp ;kalau current player adalah 1 (player 2), maka skip perintah dibawah
+	mov temp3, health2 ;pindah health player 2 ke temp3
 
 ;
 ; Check any key pressed
 ;
 read_key:
 	ldi temp, 0b00001111 ; PB4..PB6=Null, pull-Up-resistors to input lines
-	out PORTD, temp    ; of port pins PB0..PB3
-	in temp, PIND    ; read key results
+	out PORTC, temp    ; of port pins PB0..PB3
+	in temp, PINC    ; read key results
 	ori temp,0b11110000 ; mask all upper bits with a one
 	cpi temp,0b11111111 ; all bits = One?
 
@@ -177,8 +176,8 @@ ReadKey:
 
 	; read column 4
 	ldi temp, 0b01111111 ; PB7 = 0
-	out PORTD, temp
-	in temp, PIND ; read input line
+	out PORTC, temp
+	in temp, PINC ; read input line
 	ori temp, 0b11110000 ; mask upper bits
 	cpi temp, 0b11111111 ; a key in this column pressed?
 	brne KeyRowFound ; key found
@@ -187,8 +186,8 @@ ReadKey:
 
 	; read column 3
 	ldi temp, 0b10111111 ; PB6 = 0
-	out PORTD, temp
-	in temp, PIND ; read input line
+	out PORTC, temp
+	in temp, PINC ; read input line
 	ori temp, 0b11110000 ; mask upper bits
 	cpi temp, 0b11111111 ; a key in this column pressed?
 	brne KeyRowFound ; key found
@@ -197,8 +196,8 @@ ReadKey:
 
 	; read column 2
 	ldi temp, 0b11011111 ; PB5 = 0
-	out PORTD, temp
-	in temp, PIND ; read again input line
+	out PORTC, temp
+	in temp, PINC ; read again input line
 	ori temp, 0b11110000 ; mask upper bits
 	cpi temp, 0b11111111 ; a key in this column?
 	brne KeyRowFound ; column found
@@ -207,8 +206,8 @@ ReadKey:
 
 	; read column 1
 	ldi temp, 0b11101111 ; PB4 = 0
-	out PORTD, temp
-	in temp, PIND ; read again input line
+	out PORTC, temp
+	in temp, PINC ; read again input line
 	ori temp, 0b11110000 ; mask upper bits
 	cpi temp, 0b11111111 ; a key in this column?
 	brne KeyRowFound ;column found

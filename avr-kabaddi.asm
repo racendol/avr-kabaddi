@@ -24,7 +24,34 @@
 
 .equ FIELD_DATA = 0x0060 ;SRAM dari 0x0060 - 0x006F berisi data di field
 
+.org $00
+rjmp MAIN
+.org $01
+rjmp ext_int0
+.org $13
+rjmp ISR_TCOM0
+
+MAIN:
+
+INIT_STACK:
+	ldi temp, low(RAMEND)
+	ldi temp, high(RAMEND)
+	out SPH, temp
+
+RESET:
+
 init_game:
+	clr point
+	clr penalty
+	clr health1
+	clr health2
+	clr line
+	clr col
+	clr temp
+	clr temp2
+	clr temp3
+	clr temp4
+
 	ldi temp, 3
 
 	mov health1, temp
@@ -35,10 +62,16 @@ init_game:
 	mov current_player, line ;set curr player jadi 0 (player 1)
 	mov penalty, line ;set penalty jadi 0 (jadi belum ada penalty)
 
-INIT_STACK:
-	ldi temp, low(RAMEND)
-	ldi temp, high(RAMEND)
-	out SPH, temp
+
+INIT_INTERRUPT:
+	ldi temp,0b00000010
+	out MCUCR,temp
+	ldi temp,0b01000000
+	out GICR,temp
+
+	sei
+
+	clr temp
 
 CLEAR_SRAM:
 	ldi XH, high(FIELD_DATA)
@@ -54,9 +87,17 @@ CLEAR_SRAM:
 
 		tst temp
 		brne SRAM_clear_loop
-		
-	ldi temp, 0
-	ldi temp2, 0
+
+INIT_LED:
+	ser temp ; load $FF to temp
+	out DDRD,temp ; Set PORTD to output
+
+	ldi temp,0x02
+	out PORTD,temp ; Update LEDS
+
+	clr temp
+	clr temp2
+
 
 ;LCD init template borrowed from Lab 5
 .include "init-lcd.asm"
@@ -141,10 +182,21 @@ rcall CLEAR_LCD
 .include "setup-game.asm"
 .include "round-game.asm"
 
-
 forever:
 	rjmp forever
 
+ext_int0:
+	pop temp
+	ldi ZL, low(RESET)
+	ldi ZH, high(RESET)
+	push ZL
+	push ZH
+
+	clr ZL
+	clr ZH
+	clr temp
+
+	reti
 
 init_field_text_table:
 	.db "Set Up", "trap", "Rem:", "player"

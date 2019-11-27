@@ -1,4 +1,23 @@
-init_round: ; Func to prepare the round before player's input
+	init_round: ; Func to prepare the round before player's input
+
+	ldi temp4, 0
+
+	check_led:
+		sbic PORTD, 0
+		rjmp player2_turn
+
+		player1_turn:
+			ldi temp, 0x01
+			out PORTD, temp ; Update LEDS
+
+			rjmp end_led
+
+		player2_turn:
+			ldi temp, 0x02
+			out PORTD, temp
+
+		end_led:
+			clr temp
 
 	check_penalty:
 		tst penalty ; Check if there's any penalty invoked
@@ -8,7 +27,7 @@ init_round: ; Func to prepare the round before player's input
 
 		test_p1:
 			tst current_player ; Check if it's player 1's turn
-			brne test_p2 ; If it's not, jump to player2's case
+			breq test_p2 ; If it's not, jump to player2's case
 
 			dec health1 ; Decrease player 1's health by 1 (Penalized)
 			rjmp end_check ; jump to end_check
@@ -214,9 +233,19 @@ place_player: ; Function for placing player initially
 
 player_movement: ; Function for getting player's movement input
 
+	timer_enable:
+		ldi temp, 0b00101101 ; 
+		out TCCR0,temp			
+		ldi temp,1<<OCF0
+		out TIFR,temp		; Interrupt if compare true in T/C0
+		ldi temp,1<<OCIE0
+		out TIMSK,temp		; Enable Timer/Counter0 compare int
+		ldi temp,0b00001000
+		out OCR0,temp		; Set compared value
+		
 	move_loop:
 		in temp2, PINA ; Move PINA's content into temp2
-		cpi temp2, 0b00001111 ; Check if there's any button pressed in PINA
+		cpi temp2, 0b11000000 ; Check if there's any button pressed in PINA
 		brlo move_loop ; If not, loop back
 	
 	sbrc temp2, 4 ; If button pressed is bit 4
@@ -231,16 +260,6 @@ player_movement: ; Function for getting player's movement input
 	sbrc temp2, 7 ; If button pressed is bit 7
 	rjmp right ; Jump to right
 
-	forward:
-		cpi col, 0 ; Check if column is 0 (Leftmost col)
-		breq finish ; If it is, jump to finish
-		
-		rcall del_player ; Call del_player
-		dec col ; Decrement col
-		rcall move_player ; Call move_player
-
-		rjmp check_square ; Jump to check_square
-
 	backward:
 		cpi col, 3 ; Check if column is 3 (Rightmost col)
 		breq player_movement ; If it is, jump to player_movement (No effect)
@@ -254,6 +273,8 @@ player_movement: ; Function for getting player's movement input
 	left: ; Diagonal front-left
 		cpi line, 3 ; Check if line is 3 (Bottom line)
 		breq player_movement ; If it is, jump to player_movement (No effect)
+		cpi col, 0
+		breq finish
 
 		rcall del_player ; Call del_player
 		dec col ; Decrement col
@@ -265,11 +286,23 @@ player_movement: ; Function for getting player's movement input
 	right: ; Diagonal front-right
 		cpi line, 0 ; Check if line is 0 (Top line)
 		breq player_movement ; If it is, jump to player_movement (No effect)
+		cpi col, 0
+		breq finish
 
 		rcall del_player ; Call del_player
 		dec col ; Decrement col
 		dec line ; Increment line
 		rcall move_player ; CAll move_player
+
+		rjmp check_square ; Jump to check_square
+
+	forward:
+		cpi col, 0 ; Check if column is 0 (Leftmost col)
+		breq finish ; If it is, jump to finish
+		
+		rcall del_player ; Call del_player
+		dec col ; Decrement col
+		rcall move_player ; Call move_player
 
 		rjmp check_square ; Jump to check_square
 
@@ -450,6 +483,10 @@ print_continue:
 	ret ; return
 
 end:
+	timer_disable:
+		ldi temp, 0b00101000 ; 
+		out TCCR0,temp
+
 	rcall RESET_SRAM ; Call RESET_SRAM (clear SRAM)
 
 	tst health1 ; Test if health1 is 0 (P1 lose)
@@ -473,6 +510,9 @@ end:
 		rjmp init_field ; Jump to init_field
 
 	print_win:
+		ldi temp, 0x03
+		out PORTC, temp
+		
 		rcall INIT_LCD ; Call INIT_LCD (Clears LCD)
 
 		ldi temp2, 0xC7 ; Load 0xC7 (LCD screen) to temp2
@@ -507,5 +547,39 @@ end:
 		rcall print ; Call print
 
 		rjmp gameover ; Jump to gameover
+
+ISR_TCOM0:
+	inc temp4
+	cpi temp4, 0x6C
+	breq time_up
+
+	reti
+	
+	time_up:
+		tst current_player ; Test if current_player is 0 (P1)
+		brne dec_player2 ; If yes, jump to set_player2
+	
+	dec_player1:
+		dec health1
+		rjmp end_timer
+
+	dec_player2:
+		dec health2
+	
+	end_timer:
+		pop temp
+
+	ldi ZL, low(end)
+	ldi ZH, high(end)
+	push ZL
+	push ZH
+
+	clr ZL
+	clr ZH
+	clr temp
+	clr temp4
+
+	reti
+
 
 gameover:
