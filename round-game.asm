@@ -23,6 +23,46 @@
 		tst penalty ; Check if there's any penalty invoked
 		breq setup_round ; If there's none, continue the round
 
+		penalty_confirmation:
+			rcall INIT_LCD
+			
+			ldi temp2, 0xC5 ; Load 0xC5 (LCD screen) to temp2
+			rcall move ; Call move
+
+			ldi temp2, 0b01010000 ; Load "P" into temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01100101 ; Load "e" to temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01101110 ; Load "n" into temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01100001 ; Load "a" into temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01101100 ; Load "l" into temp2
+			add temp2, point ; Add point to temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01101001 ; Load "i" into temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01111010 ; Load "z" into temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01100101 ; Load "e" into temp2
+			rcall print ; Call print
+
+			ldi temp2, 0b01100100 ; Load "d" into temp2
+			rcall print ; Call print
+
+			rcall print_continue ; Call print_continue
+
+			finish_penalty_loop:
+				sbis PINA, 4 ; Skip if bit 7 in PINA is 1 (Forward button is pressed)
+				rjmp finish_penalty_loop ; Jump to finish_penalty_loop
+
 		clr penalty ; Clear the penalty register
 
 		test_p1:
@@ -240,13 +280,20 @@ player_movement: ; Function for getting player's movement input
 		out TIFR,temp		; Interrupt if compare true in T/C0
 		ldi temp,1<<OCIE0
 		out TIMSK,temp		; Enable Timer/Counter0 compare int
-		ldi temp,0b00001000
+		ldi temp,0b11000000
 		out OCR0,temp		; Set compared value
 		
 	move_loop:
 		in temp2, PINA ; Move PINA's content into temp2
-		cpi temp2, 0b11000000 ; Check if there's any button pressed in PINA
+		cpi temp2, 0b00001111 ; Check if there's any button pressed in PINA
 		brlo move_loop ; If not, loop back
+
+	timer_disable:
+		clr temp4
+		ldi temp, 0b00000000
+		out TCNT0, temp
+		ldi temp, 0b00101000 ; 
+		out TCCR0,temp
 	
 	sbrc temp2, 4 ; If button pressed is bit 4
 	rjmp forward ; Jump to forward
@@ -483,7 +530,7 @@ print_continue:
 	ret ; return
 
 end:
-	timer_disable:
+	end_timer_disable:
 		ldi temp, 0b00101000 ; 
 		out TCCR0,temp
 
@@ -550,7 +597,7 @@ end:
 
 ISR_TCOM0:
 	inc temp4
-	cpi temp4, 0x6C
+	cpi temp4, 0x28
 	breq time_up
 
 	reti
@@ -569,6 +616,52 @@ ISR_TCOM0:
 	end_timer:
 		pop temp
 
+	timer_confirmation:
+		rcall INIT_LCD
+			
+		ldi temp2, 0xC4 ; Load 0xC4 (LCD screen) to temp2
+		rcall move ; Call move
+
+		ldi temp2, 0b01001111 ; Load "O" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01110101 ; Load "u" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01110100 ; Load "t" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b00100000 ; Load " " into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01101111 ; Load "o" into temp2
+		add temp2, point ; Add point to temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01100110 ; Load "f" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b00100000 ; Load " " into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01110100 ; Load "t" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01101001 ; Load "i" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01101101 ; Load "m" into temp2
+		rcall print ; Call print
+
+		ldi temp2, 0b01100101 ; Load "e" to temp2
+		rcall print ; Call print
+
+		rcall print_continue ; Call print_continue
+
+		finish_timer_loop:
+			sbis PINA, 4 ; Skip if bit 7 in PINA is 1 (Forward button is pressed)
+			rjmp finish_timer_loop ; Jump to finish_loop
+
 	ldi ZL, low(end)
 	ldi ZH, high(end)
 	push ZL
@@ -578,6 +671,7 @@ ISR_TCOM0:
 	clr ZH
 	clr temp
 	clr temp4
+	clr temp2
 
 	reti
 
