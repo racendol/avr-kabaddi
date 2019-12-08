@@ -497,34 +497,46 @@ player_movement: ; Function for getting player's movement input
 		ret ; return
 
 print_continue:
-	ldi temp2, 0x99 ; Load 0x99 (LCD screen to temp2)
+	ldi temp2, 0x97 ; Load 0x97 (LCD screen to temp2)
 	rcall move ; Call move
 
-	ldi temp2, 0b01000110 ; Load "F" to temp2
+	ldi temp2, 0b01010000 ; Load "P" to temp2
 	rcall print ; Call print
 
-	ldi temp2, 0b00100000 ; Load " " to temp2
+	ldi temp2, 0b01110010 ; Load "r" to temp2
 	rcall print ; Call print
 
-	ldi temp2, 0b01110100 ; Load "t" to temp2
+	ldi temp2, 0b01100101 ; Load "e" to temp2
 	rcall print ; Call print
 	
-	ldi temp2, 0b01101111 ; Load "o" to temp2
+	ldi temp2, 0b01110011 ; Load "s" to temp2
+	rcall print ; Call print
+
+	ldi temp2, 0b01110011 ; Load "s" to temp2
 	rcall print ; Call print
 
 	ldi temp2, 0b00100000 ; Load " " to temp2
 	rcall print ; Call print
 
-	ldi temp2, 0b01100011 ; Load "c" to temp2
+	ldi temp2, 0b01100110 ; Load "f" to temp2
 	rcall print ; Call print
 
 	ldi temp2, 0b01101111 ; Load "o" to temp2
 	rcall print ; Call print
 
-	ldi temp2, 0b01101110 ; Load "n" to temp2
+	ldi temp2, 0b01110010 ; Load "r" to temp2
 	rcall print ; Call print
 
-	ldi temp2, 0b01110100 ; Load "t" to temp2
+	ldi temp2, 0b01110111 ; Load "w" to temp2
+	rcall print ; Call print
+
+	ldi temp2, 0b01100001 ; Load "a" to temp2
+	rcall print ; Call print
+
+	ldi temp2, 0b01110010 ; Load "r" to temp2
+	rcall print ; Call print
+
+	ldi temp2, 0b01100100 ; Load "d" to temp2
 	rcall print ; Call print
 
 	ret ; return
