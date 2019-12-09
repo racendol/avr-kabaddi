@@ -41,7 +41,7 @@ INIT_STACK:
 RESET:
 
 init_game:
-	clr point
+	clr point ; clear everything
 	clr penalty
 	clr health1
 	clr health2
@@ -178,7 +178,6 @@ test_output:
 
 rcall CLEAR_LCD
 
-;TODO: complete this!
 .include "setup-game.asm"
 .include "round-game.asm"
 
@@ -186,17 +185,17 @@ forever:
 	rjmp forever
 
 ext_int0:
-	pop temp
-	ldi ZL, low(RESET)
+	pop temp ; throw away the address
+	ldi ZL, low(RESET) ; load new address
 	ldi ZH, high(RESET)
-	push ZL
+	push ZL ; push new address
 	push ZH
 
-	clr ZL
+	clr ZL ; clear everything
 	clr ZH
 	clr temp
 
-	reti
+	reti ; jump to new address
 
 init_field_text_table:
 	.db "Set Up", "trap", "Rem:", "player"

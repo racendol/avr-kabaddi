@@ -1,23 +1,23 @@
 	init_round: ; Func to prepare the round before player's input
 
-	ldi temp4, 0
+	ldi temp4, 0 ; load 0 for temp4 (timer external counter)
 
 	check_led:
-		sbic PORTD, 0
-		rjmp player2_turn
+		sbic PORTD, 0 ; if bit 0 in portD is cleared (player 1's turn)
+		rjmp player2_turn ; Jump to player2's turn
 
 		player1_turn:
-			ldi temp, 0x01
+			ldi temp, 0x01 ; Set it to player 1
 			out PORTD, temp ; Update LEDS
 
-			rjmp end_led
+			rjmp end_led ; jump to the end
 
 		player2_turn:
-			ldi temp, 0x02
-			out PORTD, temp
+			ldi temp, 0x02 ; Set it to player 2
+			out PORTD, temp ; Update LEDS
 
 		end_led:
-			clr temp
+			clr temp ; clear temp
 
 	check_penalty:
 		tst penalty ; Check if there's any penalty invoked
@@ -274,8 +274,8 @@ place_player: ; Function for placing player initially
 player_movement: ; Function for getting player's movement input
 
 	timer_enable:
-		ldi temp, 0b00101101 ; 
-		out TCCR0,temp			
+		ldi temp, 0b00101101 
+		out TCCR0,temp		; Choose timer with prescaler 1024
 		ldi temp,1<<OCF0
 		out TIFR,temp		; Interrupt if compare true in T/C0
 		ldi temp,1<<OCIE0
@@ -289,11 +289,11 @@ player_movement: ; Function for getting player's movement input
 		brlo move_loop ; If not, loop back
 
 	timer_disable:
-		clr temp4
-		ldi temp, 0b00000000
-		out TCNT0, temp
-		ldi temp, 0b00101000 ; 
-		out TCCR0,temp
+		clr temp4 ; clear external timer counter
+		ldi temp, 0b00000000 ; load 0 into temp
+		out TCNT0, temp ; clear TCNT0
+		ldi temp, 0b00101000
+		out TCCR0,temp ; disable timer
 	
 	sbrc temp2, 4 ; If button pressed is bit 4
 	rjmp forward ; Jump to forward
@@ -608,25 +608,25 @@ end:
 		rjmp gameover ; Jump to gameover
 
 ISR_TCOM0:
-	inc temp4
-	cpi temp4, 0x28
-	breq time_up
+	inc temp4 ; add external timer counter
+	cpi temp4, 0x28 ; if external counter is equal to 0x28
+	breq time_up ; jump to time_up
 
-	reti
+	reti ; return until the next compare match
 	
 	time_up:
 		tst current_player ; Test if current_player is 0 (P1)
 		brne dec_player2 ; If yes, jump to set_player2
 	
 	dec_player1:
-		dec health1
-		rjmp end_timer
+		dec health1 ; Decrease player 1's health
+		rjmp end_timer ; end the penalty
 
 	dec_player2:
-		dec health2
+		dec health2 ; Decrease player 2's health
 	
 	end_timer:
-		pop temp
+		pop temp ; Throw away the address
 
 	timer_confirmation:
 		rcall INIT_LCD
@@ -672,20 +672,20 @@ ISR_TCOM0:
 
 		finish_timer_loop:
 			sbis PINA, 4 ; Skip if bit 7 in PINA is 1 (Forward button is pressed)
-			rjmp finish_timer_loop ; Jump to finish_loop
+			rjmp finish_timer_loop ; Jump to finish_timer_loop
 
-	ldi ZL, low(end)
+	ldi ZL, low(end) ; load new address
 	ldi ZH, high(end)
-	push ZL
+	push ZL ; push new address to stack
 	push ZH
 
-	clr ZL
+	clr ZL ; clear everything
 	clr ZH
 	clr temp
 	clr temp4
 	clr temp2
 
-	reti
+	reti ; jump
 
 
 gameover:

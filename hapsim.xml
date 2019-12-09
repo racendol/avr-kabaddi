@@ -68,7 +68,7 @@
             <Invert>0</Invert>
          </Config>
          <Config index="2">
-            <Name>Left</Name>
+            <Name>Diag-Left</Name>
             <PortPin>
                <Port>PORTA</Port>
                <Bit>6</Bit>
@@ -76,7 +76,7 @@
             <Invert>0</Invert>
          </Config>
          <Config index="3">
-            <Name>Right</Name>
+            <Name>Diag-Right</Name>
             <PortPin>
                <Port>PORTA</Port>
                <Bit>7</Bit>
